@@ -3,6 +3,7 @@ package com.lterras.api.security;
 import com.lterras.api.security.jwt.AuthEntryPointJwt;
 import com.lterras.api.security.jwt.AuthTokenFilter;
 import com.lterras.api.security.services.UserDetailsServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -59,6 +60,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/test/**").permitAll()
+                                .requestMatchers("/products/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
@@ -67,5 +69,10 @@ public class WebSecurityConfig {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }
