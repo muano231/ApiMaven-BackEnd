@@ -61,7 +61,6 @@ public class UserController {
      * @return List of users
      */
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public List<UserDTO> getUsers() {
         return userService.getUsers().stream()
                 .map(UserDTO::new)
@@ -114,7 +113,6 @@ public class UserController {
      * @param user_id
      */
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(@PathVariable("id") final Long user_id) {
         userService.deleteUser(user_id);
     }
@@ -136,9 +134,8 @@ public class UserController {
      * @return order
      */
     @PostMapping("/{id}/orders")
-    @PreAuthorize("hasRole('CUSTOMER')")
     public OrderDTO newUsersOrder(@PathVariable("id") final Long user_id, @RequestBody ObjectNode objectNode) {
-        // Order informations
+        // Order information
         User user = userService.getUser(user_id);
         Long product_id = objectNode.get("product_id").longValue();
         int quantity = objectNode.get("quantity").intValue();
@@ -162,7 +159,7 @@ public class UserController {
         // Ajout du détail de la commande en base de données
         orderDetailsService.saveOrderDetail(orderDetails);
 
-        // Renvoie du DTO de la commande
+        // Renvoi du DTO de la commande
         return orderConvert.orderToDTO(order);
     }
 
