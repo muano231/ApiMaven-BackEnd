@@ -5,6 +5,7 @@ import com.lterras.api.dto.ProductDTO;
 import com.lterras.api.model.Product;
 import com.lterras.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +24,11 @@ public class ProductController {
 
     /**
      * Create - Post a new product
-     * @param productDTO
+     * @param productDTO ProductDTO
      * @return object of a product
      */
     @PostMapping
+    @PreAuthorize("hasRole('SUPPLIER')")
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
         Product product = productConvert.productToEntity(productDTO);
         Product productCreated = productService.saveProduct(product);
@@ -46,7 +48,7 @@ public class ProductController {
 
     /**
      * Read - Get product by id
-     * @param id
+     * @param id Long
      * @return product if exists
      */
     @GetMapping("/{id}")
@@ -56,11 +58,12 @@ public class ProductController {
 
     /**
      * Update - Update product by id
-     * @param id
-     * @param product
+     * @param id Long
+     * @param product Product
      * @return current product
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('SUPPLIER')")
     public ProductDTO updateProduct(@PathVariable("id") final Long id, @RequestBody Product product) {
         Product p = productService.getProduct(id);
         if (p != null) {
@@ -90,9 +93,10 @@ public class ProductController {
 
     /**
      * Delete - Delete a product
-     * @param id
+     * @param id Long
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('SUPPLIER')")
     public void deleteProduct(@PathVariable("id") final Long id) {
         productService.deleteProduct(id);
     }
