@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class UserDTO {
@@ -18,6 +19,8 @@ public class UserDTO {
 
     private Set<Role> roles;
 
+    private List<OrderDTO> orders;
+
     public UserDTO() {}
 
     public UserDTO(User user) {
@@ -25,6 +28,8 @@ public class UserDTO {
         this.setEmail(user.getEmail());
         this.setUsername(user.getUsername());
         this.setRoles(user.getRoles());
+        List<OrderDTO> orderDTOs = user.getOrders().stream().map(OrderDTO::new).collect(Collectors.toList());
+        this.setOrders(orderDTOs);
     }
 
 }
