@@ -16,6 +16,8 @@ public class ProductDTO {
 
     private int quantity;
 
+    private String image;
+
     public ProductDTO() {}
 
     public ProductDTO(Product product) {
@@ -24,6 +26,7 @@ public class ProductDTO {
         this.setDescription(product.getDescription());
         this.setPrice(product.getPrice());
         this.setQuantity(product.getQuantity());
+        this.setImage(product.getImage());
     }
 
 }

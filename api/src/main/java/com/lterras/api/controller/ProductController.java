@@ -83,6 +83,10 @@ public class ProductController {
             if (quantity != 0) {
                 p.setQuantity(quantity);
             }
+            String image = product.getImage();
+            if (image != null) {
+                p.setImage(image);
+            }
 
             productService.saveProduct(p);
             return productConvert.productToDTO(p);

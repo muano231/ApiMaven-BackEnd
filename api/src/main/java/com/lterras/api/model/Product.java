@@ -26,16 +26,17 @@ public class Product {
     @NotBlank
     private int quantity;
 
-    //@OneToMany(mappedBy = "product")
-    //private Set<>
+    @NotBlank
+    private String image;
 
     public Product() {}
 
-    public Product(String name, String description,Float price, int quantity) {
+    public Product(String name, String description,Float price, int quantity, String image) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
+        this.image = image;
     }
 
     public Long getId() {
@@ -76,5 +77,13 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
